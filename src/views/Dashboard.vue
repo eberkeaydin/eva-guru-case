@@ -9,7 +9,8 @@ import { useRouter } from "vue-router";
 const authStore = useAuthStore();
 const router = useRouter();
 const selectedDays = ref(7); // Varsayılan gün değeri
-const isLoading = ref(false); // Yüklenme durumu
+const selectedDates = ref<string[]>([]); // Seçilen tarihleri takip eder
+const isLoading = ref(false); // Yükleme animasyonu kontrolü
 
 // Logout işlemi
 const logout = () => {
@@ -17,26 +18,37 @@ const logout = () => {
   router.push("/");
 };
 
-// Gün değişikliği için işleyici
+// Gün değişikliği işleyici
 const handleDayChange = async (day: number) => {
   selectedDays.value = day;
   isLoading.value = true; // Yükleme başlat
   try {
-    // Grafiği yeniden yüklemek için biraz gecikme eklenebilir
-    await new Promise((resolve) => setTimeout(resolve, 300)); // Simüle edilmiş gecikme
+    await new Promise((resolve) => setTimeout(resolve, 500)); // Simüle edilen yükleme süresi
   } finally {
-    isLoading.value = false; // Yükleme tamamlandı
+    isLoading.value = false;
+  }
+};
+
+// Grafikteki bir sütuna tıklanınca çağrılır
+const handleColumnClick = (date: string) => {
+  if (!selectedDates.value.includes(date)) {
+    if (selectedDates.value.length === 2) {
+      selectedDates.value = [date]; // İki tarih seçiliyse sıfırla ve yeni tarihi ekle
+    } else {
+      selectedDates.value.push(date);
+    }
   }
 };
 </script>
 
 <template>
   <div class="p-4">
+    <!-- Üst Kısım: Dashboard Başlığı ve Logout Butonu -->
     <div class="flex justify-between items-center mb-4">
       <h1 class="text-2xl font-bold">Dashboard</h1>
     </div>
 
-    <!-- Gün Seçimi -->
+    <!-- Gün Seçici -->
     <DaySelector @day-changed="handleDayChange" />
 
     <!-- Yükleme Animasyonu -->
@@ -46,27 +58,24 @@ const handleDayChange = async (day: number) => {
 
     <!-- Grafik ve Tablo -->
     <div v-else>
-      <ChartComponent :days="selectedDays" />
-      <DataTable />
+      <ChartComponent :days="selectedDays" @column-clicked="handleColumnClick" />
+      <DataTable :selected-dates="selectedDates" />
+      <button @click="logout" class="bg-red-500 text-white px-4 py-2 mt-4 rounded-lg hover:bg-red-600">
+        Logout
+      </button>
     </div>
-
-    <button @click="logout" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
-      Logout
-    </button>
   </div>
 </template>
 
 <style>
-/* Loading animasyonu için gerekli stil */
+/* Spinner için CSS */
 .animate-spin {
   display: inline-block;
   width: 2rem;
   height: 2rem;
   border: 4px solid rgba(59, 130, 246, 0.5);
-  /* Mavi kenarlar */
   border-radius: 50%;
   border-top-color: rgba(59, 130, 246, 1);
-  /* Üst kısmı tam mavi */
   animation: spin 1s linear infinite;
 }
 

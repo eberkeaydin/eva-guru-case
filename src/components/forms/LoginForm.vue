@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref, defineEmits } from "vue";
+import { ref, defineEmits } from 'vue'
 
-const email = ref("");
-const password = ref("");
+const email = ref('')
+const password = ref('')
 
 // Parent bileşene login bilgilerini gönder
-const emit = defineEmits(["login"]);
+const emit = defineEmits(['login'])
 const submitForm = () => {
-  emit("login", { email: email.value, password: password.value });
-};
+  emit('login', { email: email.value, password: password.value })
+}
 </script>
 
 <template>
