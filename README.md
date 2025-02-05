@@ -6,15 +6,15 @@ This template should help get you started developing with Vue 3 in Vite.
 
 ### Login page | (/) Route
 
-![Login Page](src\assets\login-ss.PNG)
+![Login Page](src/assets/login-ss.PNG)
 
 ### Default Dashboard Page | (/dashboard) Route
 
-![Login Page](src\assets\dashboard-default.PNG)
+![Dashboard Default](src/assets/dashboard-default.PNG)
 
 ### Dashboard Page With Data Table | (/dashboard) Route
 
-![Login Page](src\assets\dashboard-with-table.PNG)
+![Dashboard With Table](src/assets/dashboard-with-table.PNG)
 
 ## Package File
 
