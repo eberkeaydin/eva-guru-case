@@ -2,7 +2,7 @@
 import { defineEmits } from 'vue'
 
 const emit = defineEmits(['day-changed'])
-const days = [7, 14, 30, 60] // Kullanıcı için gün seçenekleri
+const days = [7, 14, 30, 60]
 
 const handleDayChange = (event: Event) => {
   const day = parseInt((event.target as HTMLSelectElement).value, 10)

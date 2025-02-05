@@ -9,7 +9,7 @@ import apiClient from '../api/axios'
 const authStore = useAuthStore()
 const router = useRouter()
 
-// Login fonksiyonu (Önceden yazdığınız kodlar burada kalacak)
+// Login function
 const handleLogin = async ({ email, password }: { email: string; password: string }) => {
   try {
     const tokenResponse = await apiClient.post('/oauth/token', {
@@ -32,7 +32,7 @@ const handleLogin = async ({ email, password }: { email: string; password: strin
         { email },
         {
           headers: {
-            Authorization: `Bearer ${authStore.token}`,
+            Authorization: `Bearer ${tokenData.Data.AccessToken}`,
           },
         },
       )
@@ -47,11 +47,14 @@ const handleLogin = async ({ email, password }: { email: string; password: strin
     alert('An error occurred during login.')
   }
 }
+
 </script>
 
 <template>
   <AuthLayout>
-    <h2 class="text-2xl font-semibold text-center text-black mb-4">Welcome !</h2>
-    <LoginForm @login="handleLogin" />
+    <div class="w-full flex flex-col items-center">
+      <h2 class="text-3xl font-semibold text-center text-black mb-6">Welcome!</h2>
+      <LoginForm @login="handleLogin" class="w-screen max-w-lg" />
+    </div>
   </AuthLayout>
 </template>

@@ -8,32 +8,32 @@ import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
 const router = useRouter();
-const selectedDays = ref(7); // Varsayılan gün değeri
-const selectedDates = ref<string[]>([]); // Seçilen tarihleri takip eder
-const isLoading = ref(false); // Yükleme animasyonu kontrolü
+const selectedDays = ref(7); // Default days
+const selectedDates = ref<string[]>([]); // Follow selected dates
+const isLoading = ref(false); // Loading animation control
 
-// Logout işlemi
+// Logout
 const logout = () => {
   authStore.logout();
   router.push("/");
 };
 
-// Gün değişikliği işleyici
+// Day change processor
 const handleDayChange = async (day: number) => {
   selectedDays.value = day;
-  isLoading.value = true; // Yükleme başlat
+  isLoading.value = true;
   try {
-    await new Promise((resolve) => setTimeout(resolve, 500)); // Simüle edilen yükleme süresi
+    await new Promise((resolve) => setTimeout(resolve, 300)); // Simulated upload time
   } finally {
     isLoading.value = false;
   }
 };
 
-// Grafikteki bir sütuna tıklanınca çağrılır
+// Selecting column call when user clicking columns for comparison
 const handleColumnClick = (date: string) => {
   if (!selectedDates.value.includes(date)) {
     if (selectedDates.value.length === 2) {
-      selectedDates.value = [date]; // İki tarih seçiliyse sıfırla ve yeni tarihi ekle
+      selectedDates.value = [date];
     } else {
       selectedDates.value.push(date);
     }
@@ -42,33 +42,36 @@ const handleColumnClick = (date: string) => {
 </script>
 
 <template>
-  <div class="p-4">
-    <!-- Üst Kısım: Dashboard Başlığı ve Logout Butonu -->
-    <div class="flex justify-between items-center mb-4">
-      <h1 class="text-2xl font-bold">Dashboard</h1>
+  <div class="p-4 w-screen h-screen">
+    <!-- Dashboard Header -->
+    <div class="flex flex-col items-center mb-4">
+      <h1 class="text-3xl font-bold text-center">Dashboard</h1>
     </div>
 
-    <!-- Gün Seçici -->
+    <!-- Day Selector -->
     <DaySelector @day-changed="handleDayChange" />
 
-    <!-- Yükleme Animasyonu -->
+    <!-- Loading Animation -->
     <div v-if="isLoading" class="flex justify-center items-center mt-8">
       <div class="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
     </div>
 
-    <!-- Grafik ve Tablo -->
+    <!-- Chart, Table and Logout Button -->
     <div v-else>
       <ChartComponent :days="selectedDays" @column-clicked="handleColumnClick" />
       <DataTable :selected-dates="selectedDates" />
-      <button @click="logout" class="bg-red-500 text-white px-4 py-2 mt-4 rounded-lg hover:bg-red-600">
-        Logout
-      </button>
+      <!-- Logout Butonu -->
+      <div class="flex justify-center mt-8">
+        <button @click="logout" class="bg-red-500 text-white px-6 py-3 mb-10 text-lg rounded-lg hover:bg-red-600">
+          Logout
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <style>
-/* Spinner için CSS */
+/* Spinner CSS */
 .animate-spin {
   display: inline-block;
   width: 2rem;

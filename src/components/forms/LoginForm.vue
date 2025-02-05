@@ -1,30 +1,41 @@
-<script setup lang="ts">
-import { ref, defineEmits } from 'vue'
-
-const email = ref('')
-const password = ref('')
-
-// Parent bileşene login bilgilerini gönder
-const emit = defineEmits(['login'])
-const submitForm = () => {
-  emit('login', { email: email.value, password: password.value })
-}
-</script>
-
 <template>
-  <form @submit.prevent="submitForm">
-    <div class="mb-4">
-      <label class="block text-gray-700">Email</label>
-      <input v-model="email" type="email"
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required />
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700">Password</label>
-      <input v-model="password" type="password"
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required />
-    </div>
-    <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-      Login
-    </button>
-  </form>
+  <div>
+    <form @submit.prevent="submitForm" class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input id="email" type="email" v-model="email" required
+          class="mt-1 block w-full p-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input id="password" type="password" v-model="password" required
+          class="mt-1 block w-full p-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
+      </div>
+
+      <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700">
+        Login
+      </button>
+    </form>
+  </div>
 </template>
+
+<script setup>
+import { ref, defineEmits } from 'vue';
+
+const email = ref('');
+const password = ref('');
+
+// Emitting login event to upper component
+const emit = defineEmits(['login']);
+
+// Form submit operation
+const submitForm = () => {
+  if (!email.value || !password.value) {
+    alert('Please enter your email and password!');
+    return;
+  }
+
+  emit('login', { email: email.value, password: password.value });
+};
+</script>
