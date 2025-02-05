@@ -2,6 +2,20 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
+## Screenshots
+
+### Login page | (/) Route
+
+![Login Page](src\assets\login-ss.PNG)
+
+### Default Dashboard Page | (/dashboard) Route
+
+![Login Page](src\assets\dashboard-default.PNG)
+
+### Dashboard Page With Data Table | (/dashboard) Route
+
+![Login Page](src\assets\dashboard-with-table.PNG)
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
