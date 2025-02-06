@@ -161,5 +161,5 @@ onMounted(fetchChartData);
 </script>
 
 <template>
-  <div ref="chartContainer" class="size-max"></div>
+  <div ref="chartContainer" class="max-w-max"></div>
 </template>

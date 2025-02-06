@@ -42,7 +42,7 @@ const handleColumnClick = (date: string) => {
 </script>
 
 <template>
-  <div class="p-4 w-screen h-screen">
+  <div class="p-4 w-screen h-screen flex flex-col items-center">
     <!-- Dashboard Header -->
     <div class="flex flex-col items-center mb-4">
       <h1 class="text-3xl font-bold text-center">Dashboard</h1>
@@ -57,8 +57,10 @@ const handleColumnClick = (date: string) => {
     </div>
 
     <!-- Chart, Table and Logout Button -->
-    <div v-else>
-      <ChartComponent :days="selectedDays" @column-clicked="handleColumnClick" />
+    <div v-else class="w-full flex flex-col items-center">
+      <div class="w-full max-w-max flex justify-center">
+        <ChartComponent :days="selectedDays" @column-clicked="handleColumnClick" />
+      </div>
       <DataTable :selected-dates="selectedDates" />
       <!-- Logout Butonu -->
       <div class="flex justify-center mt-8">
